@@ -22,7 +22,7 @@ Year
 2013
 2012
 
-As I can see, there are 10 unique years of data included in this dataset
+As we can see, there are 10 unique years of data included in this dataset
 
 
 How many unique cities and counties are located in the dataset?
@@ -49,7 +49,7 @@ ORDER BY Number_of_Products DESC
 Number_of_Products
 135
 
-Unfortunately this is not the true answer either. Similar to the previous query, there are several instances in which there are multiple spellings of the same product, 
+Unfortunately this is not the true answer. Similar to the previous query, there are several instances in which there are multiple spellings of the same product, 
 such as "Imported Vodkas" and "Imported Vodka". Punctuation and spelling errors will have to be found, corrected, and combined.
  
  
@@ -144,7 +144,7 @@ WHERE date <='2021-12-31'
 Average_Annual_Revenue
 354491653.11
 
-Now I can see the average annual revenue from alcohol sales in Iowa, which is around $350 million a year.
+Now we can see the average annual revenue from alcohol sales in Iowa, which is around $350 million a year.
 
 
 
