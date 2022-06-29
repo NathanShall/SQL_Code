@@ -1,9 +1,7 @@
-SQL Project: Writing queries against a database containing all wholesale purchases of alcohol in the state of Iowa. THe database is located in Google's BigQuery and the BigQuery SQL Workspace was used for analysis
- 
-  
-Basic Data Exploration:
+SQL Project: Writing queries against a database containing all wholesale purchases of alcohol in the state of Iowa. 
+             This database is located in Google's BigQuery and the BigQuery SQL Workspace was used for analysis.
 
-How many years of data are there?
+Question 1: How many years of data are there?
 
 SELECT DISTINCT EXTRACT(YEAR from date) AS Year
 FROM bigquery-public-data.iowa_liquor_sales.sales
