@@ -120,14 +120,14 @@ LIMIT 7
 
 Results:
 
-Row	 category_number	   category_name	
- 1	    1011000.0      American Whiskies
- 2	    1011100        Blended Whiskies
- 3      1011100.0      BLENDED WHISKIES
- 4	    1011100.0      Blended Whiskies
- 5      1011200        Straight Bourbon Whiskies
- 6      1011200.0      STRAIGHT BOURBON WHISKIES
- 7      1011200.0      Straight Bourbon Whiskies
+Row	 category_number    category_name	
+ 1	   1011000.0      American Whiskies
+ 2	   1011100        Blended Whiskies
+ 3         1011100.0      BLENDED WHISKIES
+ 4	   1011100.0      Blended Whiskies
+ 5         1011200        Straight Bourbon Whiskies
+ 6         1011200.0      STRAIGHT BOURBON WHISKIES
+ 7         1011200.0      Straight Bourbon Whiskies
 
   Unfortunately there is a similar problem of different data formats. Some category numbers are entered twice, one version with a decimal place and a zero, and one without.
   The associated category names also differ, with some entered in all caps and some in sentence case. As a result, SQL has output a unique entry for each combination of 
