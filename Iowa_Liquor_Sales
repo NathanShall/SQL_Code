@@ -274,7 +274,7 @@ Average_Annual_Revenue
   Now we can see that average annual revenue from alcohol sales in Iowa from 2012 to 2021 was around $350 million a year.
 
 
-Question 4: What were the top 5 cities and counties by total sales in 2021?
+Question 4: What were the 5 cities and counties with the highest total alcohol sales in 2021?
 
 Top 5 cities by alcohol sales:
 
@@ -291,11 +291,11 @@ LIMIT 5
 Results:
 
    City		      Total_Sales
-des moines	    49521509.0
-cedar rapids	  27401865.0
+des moines	      49521509.0
+cedar rapids	      27401865.0
 davenport	      21709074.0
-west des moines	18757919.0
-council bluffs	14886990.0
+west des moines	      18757919.0
+council bluffs	      14886990.0
 
 Top 5 counties by alcohol sales:
 
@@ -309,15 +309,15 @@ ORDER BY Total_Sales DESC
 LIMIT 5
 ;
 
-  County	    Total_Sales
+  County        Total_Sales
 polk	        99027559.0
 linn	        36729580.0
 scott	        30367939.0
-johnson	      24735545.0
-black hawk	  23562358.0
+johnson	        24735545.0
+black hawk	23562358.0
 
 
-Question 5: What were the top 5 cities and counties by total volume sold in 2021? Are they the same as total sales??
+Question 5: What were the 5 cities and counties with the highest total volume sold in 2021? Are they the same as total sales?
 
 Top 5 cities by alcohol volume:
 
@@ -334,9 +334,9 @@ LIMIT 5
 Results:
 
    City	       Total_Volume_Gal
-des moines	      676873.0
-cedar rapids	    413822.0
-davenport	        321345.0
+des moines	  676873.0
+cedar rapids	  413822.0
+davenport	  321345.0
 west des moines	  264630.0
 council bluffs	  219901.0
 
@@ -355,9 +355,9 @@ LIMIT 5
 Results:
 
 County	  Total_Volume_Gal
-polk	        1372115.0
-linn	        566397.0
-scott	        445801.0
-johnson	      358810.0
-black hawk	  348172.0
+polk	     1372115.0
+linn	     566397.0
+scott	     445801.0
+johnson	     358810.0
+black hawk   348172.0
 
