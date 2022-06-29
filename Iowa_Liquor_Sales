@@ -145,8 +145,28 @@ Average_Annual_Revenue
 Now we can see the average annual revenue from alcohol sales in Iowa, which is around $350 million a year.
 
 
+Distinct Counties, Cities, and Alcohols
+
+SELECT DISTINCT LOWER(county) AS County
+FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
+WHERE county IS NOT NULL
+ORDER BY county
+;
+
+SELECT DISTINCT LOWER(cite) AS City
+FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
+WHERE city IS NOT NULL
+ORDER BY city
+;
+
+SELECT DISTINCT LOWER(category_name) AS Alcohol_Category
+FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
+WHERE category_name IS NOT NULL
+ORDER BY category_name
+;
 
 
+Insert explanation here
 
 
 
