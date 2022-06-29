@@ -65,7 +65,7 @@ WHERE city = "Akron" OR city = "AKRON"
 
 Row   Cities	
  1    Akron
- 2	  AKRON
+ 2    AKRON
 
 
 	To remedy this, I used the LOWER operator to change the case of all data rows to lowercase and then recounted the distinct city names
