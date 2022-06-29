@@ -97,8 +97,8 @@ Row	    City
 3	  Clear Lake
 4	  ClearLake
 
-Due to restricted altering and updating of data in BigQuery's sandbox account, no further action can be taken to correct the mistakes. 
-However, a manual scan can be done to count the number of errors and calculate the true number of unique cities present in this dataset.
+	Due to restricted altering and updating of data in BigQuery's sandbox account, no further action can be taken to correct the mistakes. 
+	However, a manual scan can be done to count the number of errors and calculate the true number of unique cities present in this dataset.
 
 Number of errors counted: 11
 
