@@ -1,0 +1,300 @@
+This project was completed as a part of Khan Academy's Intro to SQL course. In it, I created two tables: one with author information such as name and age, and the other with information about each book (title, chapters, pages)..
+There were two parts to this project:
+  1) Use the JOIN function to create a table containing both the author's name and title of all entered books and run basic queries from it
+  2) Use the ALTER TABLE, UPDATE, and DELETE functions to create an imaginary SQL database for a basic app that logs whether or not a book has been read, and can add or remove books from the list if desired
+
+CREATE TABLE authors (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER);
+
+INSERT INTO authors (name, age)
+  VALUES("Chris Fox", 42);
+INSERT INTO authors (name, age) 
+  VALUES("Jason Anspach", 43);
+INSERT INTO authors (name, age) 
+  VALUES("A.K. DuBoff", 36);
+INSERT INTO authors (name, age) 
+  VALUES("John Flanagan", 78);
+INSERT INTO authors (name, age) 
+  VALUES("S.D. Tanner", NULL);
+INSERT INTO authors (name, age) 
+  VALUES("Xiran Jay Zhao", 24);
+
+CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author_id INTEGER, chapters INTEGER, pages INTEGER);
+
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("The Outcasts", 4, 45, 436);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("The Invaders", 4, 43, 429);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("The Hunters", 4, 47, 404);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Slaves of Socorro", 4, 57, 465);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Scorpion Mountain", 4, 52, 452);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("The Ghostfaces", 4, 45, 386);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("The Caldera", 4, 43, 418);
+INSERT INTO books (title, author_id, chapters, pages)  
+  VALUES ("Return of the Temujai", 4, 40, 337);
+INSERT INTO books (title, author_id, chapters, pages)  
+  VALUES ("Shattered Gods", 1, 81, 710);
+INSERT INTO books (title, author_id, chapters, pages)  
+  VALUES ("Fomori Invasion", 1, 108, 1000);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("God of the Sands", 1, 74, 683);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Behind the Lines", 1, 64, 282);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Hold the Line", 1, 49, 282);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Press the Line", 1, 57, 282);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Legionnaire", 2, 24, 308);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Galactic Outlaws", 2, 32, 378);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Crystalline Space", 3, 25, 305);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("A Light in the Dark", 3, 25, 275);
+INSERT INTO books (title, author_id, chapters, pages)  
+  VALUES ("Masters of Fate", 3, 27, 285);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Enemy Lines", 5, 32, 216);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Blind Sighted", 5, 36, 243);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Killer Edge", 5, 38, 257);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Broken Arrow", 5, 34, 229);
+INSERT INTO books (title, author_id, chapters, pages) 
+  VALUES ("Iron Widow", 6, 49, 394);
+
+
+Part 1:
+
+/* Ordering books by author with title's name */
+SELECT authors.name, books.title
+    FROM authors
+    JOIN books
+    ON authors.id = books.author_id
+    ORDER BY authors.name
+    ;
+
+Results:
+
+name	              title
+A.K. DuBoff	Crystalline Space
+A.K. DuBoff	A Light in the Dark
+A.K. DuBoff	Masters of Fate
+Chris Fox	Shattered Gods
+Chris Fox	Fomori Invasion
+Chris Fox	God of the Sands
+Chris Fox	Behind the Lines
+Chris Fox	Hold the Line
+Chris Fox	Press the Line
+Jason Anspach	Legionnaire
+Jason Anspach	Galactic Outlaws
+John Flanagan	The Outcasts
+John Flanagan	The Invaders
+John Flanagan	The Hunters
+John Flanagan	Slaves of Socorro
+John Flanagan	Scorpion Mountain
+John Flanagan	The Ghostfaces
+John Flanagan	The Caldera
+John Flanagan	Return of the Temujai
+S.D. Tanner	Enemy Lines
+S.D. Tanner	Blind Sighted
+S.D. Tanner	Killer Edge
+S.D. Tanner	Broken Arrow
+Xiran Jay Zhao	Iron Widow
+
+/* Which author wrote the most pages in this database? */
+
+SELECT authors.name AS author_name, SUM(pages) AS total_pages
+    FROM authors
+    JOIN books
+    ON authors.id = books.author_id
+    GROUP BY authors.name
+    ORDER BY total_pages DESC
+    
+Results:
+
+author_name	total_pages
+John Flanagan	3327
+Chris Fox	3239
+S.D. Tanner	945
+A.K. DuBoff	865
+Jason Anspach	686
+
+/* What were the average pages and chapters per book for each author*/
+
+SELECT authors.name AS author_name,
+        SUM(books.pages)/COUNT(books.id) AS average_pages_per_book
+    FROM authors
+    JOIN books
+    ON authors.id = books.author_id
+    GROUP BY authors.name
+    ORDER BY average_pages_per_book DESC;
+
+Results:
+
+author_name	average_pages_per_book
+Chris Fox	539
+John Flanagan	415
+Jason Anspach	343
+A.K. DuBoff	288
+S.D. Tanner	236
+
+SELECT authors.name AS author_name,
+        SUM(books.chapters)/COUNT(books.id) AS average_chapters_per_book
+    FROM authors
+    JOIN books
+    ON authors.id = books.author_id
+    GROUP BY authors.name
+    ORDER BY average_chapters_per_book DESC
+    ;
+
+Results:
+
+author_name	average_chapters_per_book
+Chris Fox	72
+John Flanagan	46
+S.D. Tanner	35
+Jason Anspach	28
+A.K. DuBoff	25
+
+
+Part 2:
+
+/* Adding a new column noting whether or not the book has been finished: Completed or Not Completed */
+
+ALTER TABLE books ADD completion_status TEXT default "Not Completed";
+
+SELECT title, completion_status FROM books
+ORDER BY title
+LIMIT 10;
+
+Results:
+
+title	                completion_status
+A Light in the Dark	Not Completed
+Behind the Lines	Not Completed
+Blind Sighted	        Not Completed
+Broken Arrow	        Not Completed
+Crystalline Space	Not Completed
+Enemy Lines	        Not Completed
+Fomori Invasion	        Not Completed
+Galactic Outlaws	Not Completed
+God of the Sands	Not Completed
+Hold the Line           Not Completed
+
+/* Updating the table to show that the book "Behind the Lines" has been completed */
+
+UPDATE books SET completion_status = "Completed" WHERE id = 12;
+
+SELECT title, completion_status FROM books
+ORDER BY title
+LIMIT 5;
+
+Results:
+
+title	                completion_status
+A Light in the Dark	Not Completed
+Behind the Lines	Completed
+Blind Sighted	        Not Completed
+Broken Arrow	        Not Completed
+Crystalline Space	Not Completed
+
+/* Updating the table using a nested query to show that all books by John Flanagan have been completed as well */
+
+UPDATE books SET completion_status = "Completed" WHERE author_id = (
+
+SELECT authors.id
+FROM authors
+JOIN books
+ON authors.id = books.author_id
+WHERE authors.name = "John Flanagan")
+;
+
+/* Now we can see that each book by John Flanagan has been marked as "Completed" as well */
+
+SELECT authors.name, books.title, books.completion_status 
+FROM authors
+JOIN books
+ON authors.id = books.author_id
+ORDER BY books.id;
+
+Results:
+
+name	        title	                completion_status
+John Flanagan	The Outcasts	        Completed
+John Flanagan	The Invaders	        Completed
+John Flanagan	The Hunters	        Completed
+John Flanagan	Slaves of Socorro	Completed
+John Flanagan	Scorpion Mountain	Completed
+John Flanagan	The Ghostfaces	        Completed
+John Flanagan	The Caldera	        Completed
+John Flanagan	Return of the Temujai	Completed
+Chris Fox	Shattered Gods	        Not Completed
+Chris Fox	Fomori Invasion	        Not Completed
+Chris Fox	God of the Sands	Not Completed
+Chris Fox	Behind the Lines	Completed
+Chris Fox	Hold the Line	        Not Completed
+Chris Fox	Press the Line	        Not Completed
+Jason Anspach	Legionnaire	        Not Completed
+Jason Anspach	Galactic Outlaws	Not Completed
+A.K. DuBoff	Crystalline Space	Not Completed
+A.K. DuBoff	A Light in the Dark	Not Completed
+A.K. DuBoff	Masters of Fate	        Not Completed
+S.D. Tanner	Enemy Lines	        Not Completed
+S.D. Tanner	Blind Sighted	        Not Completed
+S.D. Tanner	Killer Edge	        Not Completed
+S.D. Tanner	Broken Arrow	        Not Completed
+Xiran Jay Zhao	Iron Widow	        Not Completed
+
+/* Updating the table to delete the book "Iron Widow" from the reading list */ 
+
+/* Testing first to make sure that the code selects the row I want to delete */
+
+SELECT id, completion_status FROM books WHERE title = "Iron Widow";
+
+Results:
+
+id	title	        completion_status
+24	Iron Widow	Not Completed
+
+
+/* Moving on to the actual deleting */
+DELETE FROM books WHERE title = "Iron Widow";
+
+SELECT id, title, completion_status FROM books
+ORDER BY id;
+
+Results: no results
+
+/* To see our reading progress, we can select the titles and authors of books that have been read */
+
+SELECT authors.name AS author_name, books.title
+    FROM authors
+    JOIN books
+    ON authors.id = books.author_id
+    WHERE completion_status = "Completed"
+    ORDER BY authors.name
+    ;
+ 
+ Results:
+ 
+ author_name	title
+Chris Fox	Behind the Lines
+John Flanagan	The Outcasts
+John Flanagan	The Invaders
+John Flanagan	The Hunters
+John Flanagan	Slaves of Socorro
+John Flanagan	Scorpion Mountain
+John Flanagan	The Ghostfaces
+John Flanagan	The Caldera
+John Flanagan	Return of the Temujai
+
+/* If desired, additional information could be added and tracked using this app, such as completion date, number of books completed per day/week/month, most or least raed genres, and whether or not a reader enjoyed the book. */
+
+/* If you made it to the bottom, thank you for taking the time to follow along! I hope you enjoyed this project as much as I did. */
