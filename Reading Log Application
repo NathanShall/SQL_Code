@@ -1,4 +1,4 @@
-This project was completed as a part of Khan Academy's Intro to SQL course. In it, I created two tables: one with author information such as name and age, and the other with information about each book (title, chapters, pages)..
+This project was completed as a part of Khan Academy's Intro to SQL: Querying and Managing Data course. In it, I created two tables: one with author information such as name and age, and the other with information about each book (title, chapters, pages)..
 There were two parts to this project:
   1) To practice using the JOIN function to create a table containing both the author's name and title of all entered books and run basic queries from it
   2) To use the ALTER TABLE, UPDATE, and DELETE functions to create an imaginary SQL database for a basic application that can add or remove books from a reading list, and log whether or not they have been read
