@@ -152,9 +152,6 @@ Row	Categories	 category_name
 
   As displayed above, this has removed the differently entered data.
 
-  However, there are still several entries that have unique category numbers and names, but the names are unique by either one letter difference (e.g. "Imported Vodka"
-  vs "Imported Vodkas") or one space difference (e.g. "Cocktails / RTD" vs Cocktails /RTD"). Additional clarification would be required to confirm that these are unique 
-  categories or duplicates that the system created a similar category number for while processing. 
 
 SELECT COUNT(DISTINCT (category)) AS Categories 
 FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
@@ -171,7 +168,7 @@ Row	Categories
   vs "Imported Vodkas") or one space difference (e.g. "Cocktails / RTD" vs Cocktails /RTD"). Additional clarification would be required to confirm that these are unique 
   categories or duplicates that the system created a similar category number for while processing.
   
-  For the same reasons that the mis-entered city names could not be corrected, these similar liquor categories cannot be rectified. However, a manual count of these
+  For the same reasons that the mis-entered city names could not be corrected, these similar liquor categories could not be corrected either. However, a manual count of these
   entries can be done.
 
 Number of errors counted: 8
@@ -361,3 +358,6 @@ scott	     445801.0
 johnson	     358810.0
 black hawk   348172.0
 
+	The top 5 cities and counties for alcohol volume are the same as the top 5 cities and counties for sales.
+	
+	
