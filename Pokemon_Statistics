@@ -817,20 +817,67 @@ INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (720,'HoopaHoopa Unbound','Psychic','Dark',680,80,160,60,170,130,80,6,'True');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (721,'Volcanion','Fire','Water',600,80,110,120,130,90,70,6,'True');
 
-/* Detemining the total number of Pokemon of each Type (For simplicity, only the primary type/type_1 is used) */
+/* The total number of Pokemon of each Type was determined (For simplicity, only the primary type/type_1 is used) */
 
 SELECT Type_1 AS "Primary_Type", COUNT(*) AS "Total_Number" FROM Pokemon
     GROUP BY Type_1
     ORDER BY Total_Number DESC   
     ; 
 
+Results:
+
+Primary_Type	Total_Number
+Water	        112
+Normal	        98
+Grass	        70
+Bug	            69
+Psychic	        57
+Fire	        52
+Electric	    44
+Rock	        44
+Dragon	        32
+Ghost	        32
+Ground	        32
+Dark	        31
+Poison	        28
+Fighting	    27
+Steel	        27
+Ice	            24
+Fairy	        17
+Flying	        4
+
 /* All Pokemon were grouped by generation, displaying the number of new individuals added in each Pokemon generation */
 
 SELECT Generation, COUNT(*) AS Total_Pokemon FROM pokemon
+    GROUP BY Generation
+    ;
+
+Results:
+
+Generation	Total_Pokemon
+1	        166
+2	        106
+3	        160
+4	        121
+5	        165
+6	        82
+
+/* In addition, the generations with over 150 individual pokemon in them were further selected */
+
+SELECT Generation, COUNT(Name) AS Total_Pokemon FROM pokemon
 GROUP BY Generation
+HAVING Total_Pokemon > 150
 ;
 
-/* Determining the top 5 Pokemon with each stat. Legendary Pokemon and Mega Evolutions are excluded */
+Results:
+
+Generation	Total_Pokemon
+1	        166
+3	        160
+5	        165
+
+
+/* The top 5 Pokemon with each stat were determined. Legendary Pokemon and Mega Evolutions were excluded */
 
 /* HP */
 SELECT Number, Name, Type_1, Type_2, HP FROM pokemon
@@ -838,7 +885,16 @@ SELECT Number, Name, Type_1, Type_2, HP FROM pokemon
     ORDER BY HP DESC
     LIMIT 5
     ;
-    
+
+Results:
+
+Number  Name	    Type_1	Type_2	HP
+242	    Blissey	    Normal	NULL	255
+113	    Chansey	    Normal	NULL	250
+202	    Wobbuffet	Psychic	NULL	190
+321	    Wailord	    Water	NULL	170
+594	    Alomomola	Water	NULL	165
+
 /* Attack */
 SELECT Number, Name, Type_1, Type_2, Attack FROM pokemon
     WHERE Legendary = 'False' AND Name NOT LIKE '%Mega%'
@@ -846,12 +902,30 @@ SELECT Number, Name, Type_1, Type_2, Attack FROM pokemon
     LIMIT 5
     ;
     
+Results:
+
+Number	Name	                Type_1	Type_2	Attack
+409	    Rampardos	            Rock	NULL	165
+289	    Slaking	                Normal  NULL	160
+681	    AegislashBlade Forme	Steel	Ghost	150
+612	    Haxorus	                Dragon  NULL	147
+464 	Rhyperior	            Ground	Rock	140   
+
 /* Defense */
 SELECT Number, Name, Type_1, Type_2, Defense FROM pokemon
     WHERE Legendary = 'False' AND Name NOT LIKE '%Mega%'
     ORDER BY Defense DESC
     LIMIT 5
     ;
+
+Results:
+
+Number	Name	    Type_1	Type_2	Defense
+213	    Shuckle	    Bug	    Rock	230
+208	    Steelix	    Steel	Ground	200
+713	    Avalugg	    Ice	    NULL	184
+91	    Cloyster	Water	Ice 	180
+306	    Aggron	    Steel	Rock	180
 
 /* Special Attack */
 SELECT Number, Name, Type_1, Type_2, Sp_Atk FROM pokemon
@@ -860,12 +934,30 @@ SELECT Number, Name, Type_1, Type_2, Sp_Atk FROM pokemon
     LIMIT 5
     ;
 
+Results:
+
+Number	Name	                Type_1	Type_2	Sp_Atk
+681	    AegislashBlade Forme	Steel	Ghost	150
+609	    Chandelure	            Ghost	Fire	145
+555	    DarmanitanZen Mode	    Fire	Psychic	140
+65	    Alakazam	            Psychic	NULL	135
+474	    Porygon-Z	            Normal	NULL	135
+
 /* Special Defense */
 SELECT Number, Name, Type_1, Type_2, Sp_Def FROM pokemon
     WHERE Legendary = 'False' AND Name NOT LIKE '%Mega%'
     ORDER BY Sp_Def DESC
     LIMIT 5
     ;
+
+Results:
+
+Number	Name	                Type_1	Type_2	Sp_Def
+213 	Shuckle	                Bug	    Rock	230
+671 	Florges	                Fairy	NULL	154
+476	    Probopass	            Rock	Steel	150
+681	    AegislashShield Forme	Steel	Ghost	150
+703	    Carbink	                Rock	Fairy	150
 
 /* Speed */
 SELECT Number, Name, Type_1, Type_2, Speed FROM pokemon
@@ -874,7 +966,14 @@ SELECT Number, Name, Type_1, Type_2, Speed FROM pokemon
     LIMIT 5
     ;
 
-/* For the Speed stat, each non-Legendary non-Mega Pokemon is grouped into "Low", "Medium", "High" categories. Afterwards, the total number of  Pokemon in each category is calculated using a nested sub-query. */
+Number	Name	    Type_1	    Type_2	Speed
+291	    Ninjask	    Bug	        Flying	160
+617 	Accelgor	Bug	        NULL	145
+101	    Electrode	Electric	NULL	140
+135	    Jolteon	    Electric	NULL	130
+142	    Aerodactyl	Rock	    Flying	130
+
+/* Within the Speed stat, each non-Legendary non-Mega Pokemon was grouped into "Low", "Medium", "High" categories. Afterwards, the total number of  Pokemon in each category was calculated using an additional CASE query. */
 
 SELECT Name, Speed,
     CASE
@@ -884,8 +983,23 @@ SELECT Name, Speed,
     END AS "Speed_Rating"
 FROM pokemon
 WHERE Legendary = 'False' AND Name NOT LIKE '%Mega%'
-LIMIT 30
+LIMIT 10
 ;
+
+Results:
+
+Name	    Speed	Speed_Rating
+Bulbasaur	45	    Low
+Ivysaur	    60	    Medium
+Venusaur	80	    Medium
+Charmander	65	    Medium
+Charmeleon	80	    Medium
+Charizard	100 	Medium
+Squirtle	43  	Low
+Wartortle	58	    Low
+Blastoise	78	    Medium
+Caterpie	45	    Low
+
 
 SELECT 
     CASE
@@ -904,18 +1018,12 @@ ORDER BY
          WHEN 'High' THEN 3 END
 ;
 
-/* Determining the average stat value across all non-legendary, non-mega Pokemon */
+Results:
 
-SELECT 
-    AVG(HP) AS Average_HP, 
-    AVG(Attack) AS Average_Attack, 
-    AVG(Defense) AS Average_Defense, 
-    AVG(Sp_Atk) AS Average_Special_Attack, 
-    AVG(Sp_Def) AS Average_Special_Defense, 
-    AVG(Speed) AS Average_Speed 
-FROM Pokemon 
-WHERE Legendary = 'False' AND Name NOT LIKE '%Mega%'
-;
+Speed_Rating	Total_Number
+Low	            307
+Medium	        369
+High	        15
 
 
 
