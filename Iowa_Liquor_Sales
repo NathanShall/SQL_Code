@@ -2,6 +2,36 @@ SQL Project:
 	For this project, I am writing queries against a database containing all wholesale purchases of alcohol in the state of Iowa in order to understand alcohol sales, volume, and preference across the state. 
 	This database is named iowa_liquor_sales and is located within the public datasets in Google's BigQuery. The BigQuery SQL Workspace was used for analysis.
 
+Schema:
+
+Field name 		Type
+
+invoice_and_item_number	STRING			
+date			DATE			
+store_number		STRING			
+store_name		STRING			
+address			STRING	
+city			STRING			
+zip_code		STRING			
+store_location		STRING			
+county_number		STRING			
+county			STRING			
+category		STRING			
+category_name		STRING			
+vendor_number		STRING			
+vendor_name		STRING			
+item_number		STRING			
+item_description	STRING			
+pack			INTEGER			
+bottle_volume_ml	INTEGER			
+state_bottle_cost	FLOAT			
+state_bottle_retail	FLOAT			
+bottles_sold		INTEGER			
+sale_dollars		FLOAT			
+volume_sold_liters	FLOAT			
+volume_sold_gallons	FLOAT			
+
+
 Data Exploration: 
 
 Question 1: How many years of data are there?
