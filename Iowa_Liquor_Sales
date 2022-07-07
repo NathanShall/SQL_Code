@@ -1,5 +1,5 @@
 SQL Project: 
-	For this project, I am writing queries against a database containing all wholesale purchases of alcohol in the state of Iowa in order to understand alcohol sales, volume, and preference across the state. 
+	For this project, I wrote queries against a database containing all wholesale purchases of alcohol in the state of Iowa in order to understand alcohol sales, volume, and preference across the state. 
 	This database is named iowa_liquor_sales and is located within the public datasets in Google's BigQuery. The BigQuery SQL Workspace was used for analysis.
 
 Schema:
@@ -53,14 +53,14 @@ Year
 2013
 2012
 
-	There are 10 unique years of data included in this dataset
+Answer: There are 10 unique years of data included in this dataset
 
 
 Question 2: How many unique cities, counties, and liquor categories are present in the dataset?
 
 Unique Counties:
 
-	In order to answer this question, I selected all the distinct county numbers from the column county_numbers
+/* In order to answer this question, I selected all the distinct county numbers from the column county_numbers */
 
 SELECT COUNT(DISTINCT county_number) AS Counties
 FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
@@ -71,7 +71,8 @@ Results:
 Row Counties
  1    99
 
-	There are 99 unique Iowa counties in this dataset.
+Answer: There are 99 unique Iowa counties in this dataset.
+
 
 Unique Cities:
 
@@ -85,8 +86,8 @@ Results:
 Row  Cities	
  1    850
 
-	A quick count of the distinct cities results in a total of 850 cities. 
-	However, a closer look at a table reveals that multiple versions of many city names have been entered, such as "Akron" and "AKRON".
+/* A quick count of the distinct cities results in a total of 850 cities. 
+However, a closer look at a table reveals that multiple versions of many city names have been entered, for example "Akron" and "AKRON". */
 
 SELECT DISTINCT city AS Cities
 FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
@@ -98,7 +99,7 @@ Row   Cities
  2    AKRON
 
 
-	To remedy this, I used the LOWER operator to change the case of all data rows to lowercase and then recounted the distinct city names
+/* To remedy this, I used the LOWER operator to change the case of all data rows to lowercase and then recounted the distinct city names */
 
 SELECT COUNT DISTINCT LOWER(city) AS City 
 FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
@@ -110,8 +111,8 @@ Results:
 Row	   City	
  1	   467
 
-	This is definitely a more accurate count of the unique cities in the dataset now that we have altered the capitalized duplicates. 
-	However, the table still shows duplicate entries in the form of misspellings. Two examples are displayed below:  
+/* This is a more accurate count of the unique cities in the dataset now that we have altered the capitalized duplicates. 
+However, the table still shows duplicate entries in the form of misspellings. Two examples are displayed below:  */
 
 SELECT DISTINCT (city) AS City 
 FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
@@ -127,19 +128,19 @@ Row	    City
 3	  Clear Lake
 4	  ClearLake
 
-	Due to restricted altering and updating of data in BigQuery's sandbox account, no further action can be taken to correct the mistakes. 
-	However, a manual scan can be done to count the number of errors and calculate the true number of unique cities present in this dataset.
+/* Due to restricted table altering and updating priviliges within BigQuery's sandbox account, no further action can be taken to correct the mistakes. 
+However, a manual scan can be done to count the number of errors and calculate the true number of unique cities present in this dataset. */
 
 Number of errors counted: 11
 
 467 - 11 = 456
 
-	Within this dataset, there are 456 unique cities.
+Answer: Within this dataset, there are 456 unique cities.
 
 
 Question 3: How many unique liquor categories are there?
  
-  To answer this question, I queried the distinct liquor category numbers from the "category" column.
+ /* To answer this question, I queried the distinct liquor category numbers from the "category" column. */
 
 SELECT DISTINCT (category) AS category_number, category_name
 FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
@@ -159,11 +160,10 @@ Row	 category_number    category_name
  6         1011200.0      STRAIGHT BOURBON WHISKIES
  7         1011200.0      Straight Bourbon Whiskies
 
-  Unfortunately there is a similar problem of different data formats. Some category numbers are entered twice, one version with a decimal place and a zero, and one without.
-  The associated category names also differ, with some entered in all caps and some in sentence case. As a result, SQL has output a unique entry for each combination of 
+/* Unfortunately there is a similar problem of different data formats. Some category numbers are entered twice, one version with a decimal place and a zero, and one without. The associated category names also differ, with some entered in all caps and some in sentence case. As a result, SQL has output a unique entry for each combination of 
   decimal and case if present. */
 
-  To address this, I will select only distinct category numbers without decimals. Using the operator LENGTH, I will select all category numbers that have 7 characters. */
+/* To address this, I will select only distinct category numbers without decimals. Using the operator LENGTH, I will select all category numbers that have 7 characters. */
 
 SELECT DISTINCT (category) AS Categories, category_name 
 FROM nth-baton-346119.iowa_liquor_sales.Iowa_Liquor_Sales_Table
@@ -180,7 +180,7 @@ Row	Categories	 category_name
  4	 1011400   Tennessee Whiskies
  5	 1011500   Bottled in Bond Bourbon
 
-  As displayed above, this has removed the differently entered data.
+ /* As displayed above, this has standardized the data within the table. */
 
 
 SELECT COUNT(DISTINCT (category)) AS Categories 
@@ -192,20 +192,20 @@ Results:
 Row	Categories	
  1	    55
 
-  Without removing any of the entries discussed above, there are 55 unique categories of liquor in this database. 
+ /* Without removing any of the entries discussed above, there are 55 unique categories of liquor in this database. 
   
   However, there are still several entries that have unique category numbers and names, but the names are unique by either one letter difference (e.g. "Imported Vodka"
   vs "Imported Vodkas") or one space difference (e.g. "Cocktails / RTD" vs Cocktails /RTD"). Additional clarification would be required to confirm that these are unique 
   categories or duplicates that the system created a similar category number for while processing.
   
   For the same reasons that the mis-entered city names could not be corrected, these similar liquor categories could not be corrected either. However, a manual count of these
-  entries can be done.
+  entries can be done.*/
 
 Number of errors counted: 8
 
 55 - 8 = 47
 
-  Within this dataset, there are either 55 or 47 unique alcohol categories.
+Answer: Within this dataset, there are either 55 or 47 unique alcohol categories.
  
  
 Analysis Questions:
@@ -228,6 +228,7 @@ SELECT
 FROM bigquery-public-data.iowa_liquor_sales.sales
 GROUP BY Year
 ORDER BY Year DESC
+;
 
 Results:
 
@@ -244,11 +245,11 @@ Year	Total_Sales
 2013	258103792.82005352
 2012	255203313.57004404
 
-  Here I have created one column with unique dates by extracting the year from the date column and another column with the Total Sales value for each year. 
-  The key here is the 'GROUP BY' function which organizes the sum totals by year
+/* Here I have created one column with unique dates by extracting the year from the date column and another column with the Total Sales value for each year. 
+The key here is the 'GROUP BY' function which organizes the sum totals by year. */
 
-  However, since 2022 is ongoing, the dataset is incomplete. As a result, the total sales for 2022 are much lower than the others.
-  So I will exclude 2022 from this and future queries about sales:
+/* However, since 2022 is ongoing, the dataset is incomplete. As a result, the total sales for 2022 are much lower than the others.
+So I will exclude 2022 from this and future queries about sales: */
 
 SELECT 
   DISTINCT EXTRACT(YEAR from date) AS Year,
@@ -257,6 +258,7 @@ FROM bigquery-public-data.iowa_liquor_sales.sales
 WHERE date <='2021-12-31'        
 GROUP BY Year
 ORDER BY Year DESC
+;
 
 Year	Total_Sales
 2021	428123535.4
@@ -270,11 +272,10 @@ Year	Total_Sales
 2013	258103792.82
 2012	255203313.57
 
-  Now, data from the year 2022 has been removed.
-  I have also added the 'ROUND' command to round the sum totals to two decimal places.
+/* Now, data from the year 2022 has been removed. I have also added the 'ROUND' command to round the sum totals to two decimal places. */
 
 
-Question 3: What has been the average annual alcohol revenue in Iowa since 2012?
+Question 3: What has been Iowa's average annual alcohol revenue since 2012?
 
 SELECT 
   AVG(sale_dollars) AS Average_Annual_Revenue       
@@ -284,11 +285,10 @@ WHERE date <='2021-12-31'
 Average_Revenue
 138.88
 
-  This is clearly not the answer I was expecting. In this scenario, using the 'AVG' function in this case simply calculated the value of the average liquor purchase.
-  While this would be a perfect answer for "What was the average amount spent on a single liquor purchase from 2012 to 2021?", this does not answer my question. 
+/* This is clearly not the answer I was expecting. In this scenario, using the 'AVG' function in this case simply calculated the value of the average liquor purchase. While this would be a perfect answer for "What was the average amount spent on a single liquor purchase from 2012 to 2021?", this does not answer my question. 
 
-  To fix this, instead of using the 'AVG' function, I will use the sum function and divide it by the number of full years of data (9). 
-  With this in place
+To fix this, instead of using the 'AVG' function, I will use the sum function and divide it by the number of full years of data (9). 
+With this in place: */
 
 SELECT 
     ROUND(SUM(sale_dollars/9),2) AS Average_Annual_Revenue  
@@ -298,7 +298,7 @@ WHERE date <='2021-12-31'
 Average_Annual_Revenue
     354491653.11
 
-  Now we can see that average annual revenue from alcohol sales in Iowa from 2012 to 2021 was around $350 million a year.
+Answer: The average annual revenue from alcohol sales in Iowa from 2012 to 2021 was around $350 million a year.
 
 
 Question 4: What were the 5 cities and counties with the highest total alcohol sales in 2021?
@@ -336,7 +336,7 @@ ORDER BY Total_Sales DESC
 LIMIT 5
 ;
 
-  County        Total_Sales
+County          Total_Sales
 polk	        99027559.0
 linn	        36729580.0
 scott	        30367939.0
@@ -388,6 +388,6 @@ scott	     445801.0
 johnson	     358810.0
 black hawk   348172.0
 
-	The top 5 cities and counties for alcohol volume are the same as the top 5 cities and counties for sales.
+Answer: The top 5 cities and counties for alcohol volume are the same as the top 5 cities and counties for sales.
 	
 	
